@@ -1,0 +1,111 @@
+{
+  "tools": [
+    {
+      "id": "ekko",
+      "name": "Ekko",
+      "category": "Hospital Administration",
+      "available": false, "status": "coming-soon"
+    }
+  ],
+  "modules": [
+    {
+      "id": "dashboard",
+      "file": "01_dashboard.mp4",
+      "title": "Dashboard",
+      "description": "Overview of the home screen: stat cards, doctors and staff on duty, patient queue and tickets.",
+      "order": 1,
+      "tool": "ekko",
+      "comingSoon": true
+    },
+    {
+      "id": "inhouse",
+      "file": "02_inhouse.mp4",
+      "title": "In-House",
+      "description": "Team calendar for meetings and the Team news feed.",
+      "order": 2,
+      "tool": "ekko",
+      "comingSoon": true
+    },
+    {
+      "id": "clockin",
+      "file": "03_clockin.mp4",
+      "title": "Clock in",
+      "description": "How to start and end a shift and how it shows in Staff on duty.",
+      "order": 3,
+      "tool": "ekko",
+      "comingSoon": true
+    },
+    {
+      "id": "outpatients",
+      "file": "04_outpatients.mp4",
+      "title": "Outpatients",
+      "description": "Registering outpatients, managing the queue, files and visit analysis.",
+      "order": 4,
+      "tool": "ekko",
+      "comingSoon": true
+    },
+    {
+      "id": "finance",
+      "file": "05_finance.mp4",
+      "title": "Finance",
+      "description": "Income, expenses, cash flow and outstanding balances by department.",
+      "order": 5,
+      "tool": "ekko",
+      "comingSoon": true
+    },
+    {
+      "id": "pharmacy",
+      "file": "06_pharmacy.mp4",
+      "title": "Pharmacy",
+      "description": "Vendors, GRNs and order summary, pharmacy sales and problem reports.",
+      "order": 6,
+      "tool": "ekko",
+      "comingSoon": true
+    },
+    {
+      "id": "beds",
+      "file": "07_beds.mp4",
+      "title": "Beds",
+      "description": "Admitting patients, allocating beds, rooms and discharge files.",
+      "order": 7,
+      "tool": "ekko",
+      "comingSoon": true
+    },
+    {
+      "id": "laboratory",
+      "file": "08_laboratory.mp4",
+      "title": "Laboratory",
+      "description": "Recording tests, daily reports, analysis, payments and the test catalogue.",
+      "order": 8,
+      "tool": "ekko",
+      "comingSoon": true
+    },
+    {
+      "id": "maintenance",
+      "file": "09_maintenance.mp4",
+      "title": "Maintenance",
+      "description": "Raising maintenance tickets and reviewing resolved files.",
+      "order": 9,
+      "tool": "ekko",
+      "comingSoon": true
+    },
+    {
+      "id": "ambulance",
+      "file": "10_ambulance.mp4",
+      "title": "Ambulance",
+      "description": "Vehicles, drivers, trip assignment and vehicle care costs.",
+      "order": 10,
+      "tool": "ekko",
+      "comingSoon": true
+    },
+    {
+      "id": "administration",
+      "file": "11_administration.mp4",
+      "title": "Administration",
+      "description": "Adding staff, setting portal access and managing your account.",
+      "order": 11,
+      "tool": "ekko",
+      "comingSoon": true
+    }
+  ]
+}

@@ -1,0 +1,141 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ekko early access — Dhanjiva</title>
+<meta name="description" content="Request early access to Ekko, Dhanjiva's hospital administration tool.">
+<meta name="theme-color" content="#fbfcfe">
+<link rel="canonical" href="https://dhanjiva.com/get-ekko.html">
+<link rel="icon" href="favicon.ico" sizes="any">
+<link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32.png">
+<link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/site.css">
+<style>
+.pulse{animation:pulse 3s ease-in-out infinite}@keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.04)}}
+@media(prefers-reduced-motion:reduce){.pulse{animation:none}}
+.float-orb{position:absolute;border-radius:50%;filter:blur(60px);opacity:.7}
+</style>
+</head>
+<body>
+<a class="skip" href="#form">Skip to form</a>
+<header class="site-header scrolled" id="hdr">
+  <a class="brand" href="index.html"><img src="assets/logo-mark.png" width="40" height="42" alt="">Dhanjiva</a>
+  <nav class="nav" aria-label="Main">
+    <a href="index.html#tools">Tools</a>
+    <a href="index.html#modules">Modules</a>
+    <a href="index.html#faq">Help</a>
+    <a class="btn p" href="get-ekko.html" style="padding:12px 22px" aria-current="page">Get early access ↗</a>
+  </nav>
+  <button class="burger" id="burger" aria-label="Open menu" aria-expanded="false"><i></i></button>
+</header>
+<nav class="mobile-nav" id="mnav" hidden>
+  <a href="index.html#tools">Tools</a>
+  <a href="index.html#modules">Modules</a>
+  <a href="index.html#faq">Help</a>
+  <a class="btn p" href="get-ekko.html">Get early access ↗</a>
+  <a href="mailto:dhanjiva.health@gmail.com">Contact</a>
+</nav>
+
+<section class="coming">
+  <div class="float-orb" style="width:480px;height:480px;background:#e5f2eb;left:-10%;top:10%"></div>
+  <div class="float-orb" style="width:360px;height:360px;background:#eeebfa;right:-5%;bottom:10%"></div>
+  <div class="float-orb" style="width:280px;height:280px;background:#fff0e3;left:40%;top:-5%"></div>
+  <svg class="orbit" id="orbit" viewBox="0 0 1200 800" aria-hidden="true"></svg>
+
+  <div class="card coming-card" id="panel">
+    <div id="form-view">
+      <div style="display:flex;gap:12px;align-items:center;margin-bottom:8px"><span id="mark"></span>
+        <span class="pl pp">Coming soon · early access</span></div>
+      <h1 style="font-size:clamp(36px,5vw,52px);margin:16px 0 10px">Ekko is <em class="s">coming soon.</em></h1>
+      <p class="lead" style="font-size:17px;margin-bottom:28px">Leave your details. We’ll set you up when doors open.</p>
+      <div class="faq-vis ge-vis" aria-hidden="true"><i class="o1"></i><i class="o2"></i><i class="o3"></i><span id="gemark"></span></div>
+
+      <form id="form" action="https://formsubmit.co/ajax/dhanjiva.health@gmail.com" method="POST" novalidate>
+        <input type="hidden" name="_subject" value="New Ekko early-access request">
+        <input type="hidden" name="_template" value="table">
+        <input type="hidden" name="_captcha" value="false">
+        <div class="hp" aria-hidden="true"><label>Company website<input type="text" name="_honey" tabindex="-1" autocomplete="off"></label></div>
+
+        <div class="fld"><label for="name">Your name</label><input id="name" name="name" autocomplete="name" required minlength="2" maxlength="100"></div>
+        <div class="fld"><label for="hospital">Hospital or organisation</label><input id="hospital" name="hospital" autocomplete="organization" required minlength="2" maxlength="160"></div>
+        <div class="fld"><label for="role">Your role</label>
+          <select id="role" name="role" required>
+            <option value="">Select…</option>
+            <option>Administrator</option>
+            <option>Owner / Director</option>
+            <option>Operations</option>
+            <option>Finance</option>
+            <option>IT</option>
+            <option>Other</option>
+          </select>
+        </div>
+        <div class="fld"><label for="email">Work email</label><input id="email" name="email" type="email" autocomplete="email" required maxlength="254"></div>
+        <div class="fld"><label for="phone">Phone <span style="font-weight:500;color:var(--mute)">(optional)</span></label><input id="phone" name="phone" type="tel" autocomplete="tel" maxlength="40"></div>
+        <label class="consent"><input type="checkbox" name="consent" required><span>I agree to have these details stored to handle my early-access request.</span></label>
+        <button class="btn p" type="submit" id="submit" style="width:100%;justify-content:center">Request early access ↗</button>
+        <p class="form-err" id="err" role="alert" hidden></p>
+        <p style="color:var(--mute);font-size:13px;margin-top:14px;text-align:center">Business details only. No patient information.<br>
+          Prefer email? <a href="mailto:dhanjiva.health@gmail.com?subject=New%20Ekko%20early-access%20request" style="color:var(--teal);font-weight:600">dhanjiva.health@gmail.com</a></p>
+      </form>
+    </div>
+
+    <div class="success" id="success" hidden>
+      <div class="check pulse" aria-hidden="true">✓</div>
+      <h2 style="font-size:36px;margin-bottom:10px">You’re on the list.</h2>
+      <p class="lead" style="margin:0 auto;font-size:17px">Thanks — we’ll be in touch about Ekko early access.</p>
+      <a class="btn g" href="index.html" style="margin-top:28px">← Back to Dhanjiva</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap foot">
+    <div>
+      <a class="brand" href="index.html"><img src="assets/logo-mark.png" width="40" height="42" alt="">Dhanjiva</a>
+      <p style="color:var(--ink2);margin-top:18px">Tools for the people who run hospitals.</p>
+      <div class="foot-links"><a href="mailto:dhanjiva.health@gmail.com" style="color:var(--teal);font-weight:600">dhanjiva.health@gmail.com</a></div>
+    </div>
+    <p style="color:var(--mute)">© 2026 Dhanjiva</p>
+  </div>
+</footer>
+
+<script>
+const EKKO=(w,c='#227568')=>{let s=`<svg viewBox="-50 -50 100 100" width="${w}" height="${w}">`;for(let i=0;i<6;i++){const a=(i*60-90)*Math.PI/180,x=Math.cos(a)*36,y=Math.sin(a)*36;s+=`<line x1="0" y1="0" x2="${x}" y2="${y}" stroke="${c}" stroke-width="6" stroke-linecap="round"/><circle cx="${x}" cy="${y}" r="8.5" fill="${c}"/>`}return s+`<circle r="21" fill="${c}"/><text y="9.5" text-anchor="middle" font-family="Plus Jakarta Sans,Inter" font-weight="800" font-size="30" fill="#fff">e</text></svg>`};
+document.getElementById('mark').innerHTML=EKKO(36);{const g=document.getElementById('gemark');if(g)g.innerHTML=EKKO(110)}
+const burger=document.getElementById('burger'),mnav=document.getElementById('mnav');
+burger.addEventListener('click',()=>{const open=mnav.classList.toggle('open');if(open)mnav.removeAttribute('hidden');burger.setAttribute('aria-expanded',String(open))});
+mnav.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>{mnav.classList.remove('open')}));
+
+// orbit animation
+const orb=document.getElementById('orbit');
+const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+function draw(t){let s='';for(let i=0;i<18;i++){const a=t*.3+i*.7,x=600+Math.cos(a)*280+Math.sin(a*1.3)*40,y=400+Math.sin(a)*200+Math.cos(a*1.1)*30;s+=`<circle cx="${x}" cy="${y}" r="${4+2*Math.sin(t+i)}" fill="#227568" opacity=".18"/>`}
+for(let i=0;i<6;i++){const a=(i*60-90+t*8)*Math.PI/180;s+=`<line x1="600" y1="400" x2="${600+Math.cos(a)*120}" y2="${400+Math.sin(a)*120}" stroke="#227568" stroke-opacity=".12" stroke-width="3"/>`}
+s+=`<g transform="translate(600,400)">${EKKO(80).replace('<svg ','<svg x="-40" y="-40" ')}</g>`;orb.innerHTML=s}
+let t0=performance.now();(function loop(n){if(!reduce)draw((n-t0)/1000);else draw(0);requestAnimationFrame(loop)})(t0);
+
+const form=document.getElementById('form'),err=document.getElementById('err'),sub=document.getElementById('submit');
+const MAILTO='mailto:dhanjiva.health@gmail.com?subject='+encodeURIComponent('New Ekko early-access request');
+form.addEventListener('submit',async e=>{
+  e.preventDefault();err.hidden=true;
+  if(form._honey&&form._honey.value)return;
+  if(!form.reportValidity())return;
+  const fd=new FormData(form);
+  const payload={name:fd.get('name'),hospital:fd.get('hospital'),role:fd.get('role'),email:fd.get('email'),phone:fd.get('phone')||'',consent:'yes',_subject:fd.get('_subject'),_template:fd.get('_template'),_captcha:fd.get('_captcha')};
+  sub.disabled=true;sub.textContent='Sending…';
+  try{
+    const res=await fetch(form.action,{method:'POST',headers:{'Content-Type':'application/json','Accept':'application/json'},body:JSON.stringify(payload)});
+    if(!res.ok)throw new Error('bad status');
+    document.getElementById('form-view').hidden=true;
+    document.getElementById('success').hidden=false;
+  }catch(ex){
+    err.hidden=false;err.innerHTML='We could not reach the server. <a href="'+MAILTO+'&body='+encodeURIComponent('Name: '+payload.name+'\\nHospital: '+payload.hospital+'\\nRole: '+payload.role+'\\nEmail: '+payload.email+'\\nPhone: '+payload.phone)+'" style="color:var(--teal);font-weight:600">Email us instead</a>.';
+    sub.disabled=false;sub.textContent='Request early access ↗';
+  }
+});
+</script>
+</body>
+</html>

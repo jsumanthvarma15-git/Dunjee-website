@@ -1,0 +1,212 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Dhanjiva — Tools for the people who run hospitals</title>
+<meta name="description" content="Dhanjiva builds management tools for hospitals. Coming soon: Ekko, hospital administration: a little more organised, a lot more care.">
+<meta name="theme-color" content="#fbfcfe">
+<link rel="canonical" href="https://dhanjiva.com/">
+<meta property="og:title" content="Dhanjiva — Your hospital, in rhythm.">
+<meta property="og:description" content="Tools for the people who run hospitals. Ekko is coming first: hospital administration in one calm workspace.">
+<meta property="og:type" content="website">
+<meta property="og:image" content="assets/logo-mark.png">
+<meta name="twitter:card" content="summary">
+<link rel="icon" href="favicon.ico" sizes="any">
+<link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32.png">
+<link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/site.css">
+</head>
+<body>
+<a class="skip" href="#tools">Skip to tools</a>
+<header class="site-header" id="hdr">
+  <a class="brand" href="#hero" aria-label="Dhanjiva home"><img src="assets/logo-mark.png" width="40" height="42" alt="">Dhanjiva</a>
+  <nav class="nav" aria-label="Main">
+    <a href="#tools">Tools</a>
+    <a href="#modules">Modules</a>
+    <a href="#faq">Help</a>
+    <a class="btn p" href="get-ekko.html" style="padding:12px 22px">Get early access ↗</a>
+  </nav>
+  <button class="burger" id="burger" aria-label="Open menu" aria-expanded="false" aria-controls="mnav"><i></i></button>
+</header>
+<nav class="mobile-nav" id="mnav" hidden>
+  <a href="#tools">Tools</a>
+  <a href="#modules">Modules</a>
+  <a href="#faq">Help</a>
+  <a class="btn p" href="get-ekko.html">Get early access ↗</a>
+  <a href="mailto:dhanjiva.health@gmail.com">Contact</a>
+</nav>
+
+<main>
+<section class="sec" id="hero">
+  <div class="blob" style="width:560px;height:560px;background:#e5f2eb;left:-180px;top:-120px"></div>
+  <div class="blob" style="width:420px;height:420px;background:#eeebfa;right:-80px;top:40px"></div>
+  <div class="wrap hero-grid">
+    <div class="hero-copy">
+      <div class="rv feat"><span id="ekko-mark"></span><b>Coming soon · Ekko</b><i>Hospital Administration</i></div>
+      <h1 class="rv" style="margin:28px 0 20px">Your hospital,<br><em class="s">in rhythm.</em></h1>
+      <p class="lead rv">Tools for the people who run hospitals.</p>
+      <div class="rv" style="display:flex;flex-wrap:wrap;gap:12px;margin-top:32px">
+        <a class="btn p" href="#tools">Explore our tools ↓</a>
+        <a class="btn g" href="get-ekko.html">Get early access ↗</a>
+      </div>
+      <p class="rv" style="margin-top:28px;font-size:14px;color:var(--mute)"><span class="live"></span>Tap a room. Step inside. · Sample data</p>
+    </div>
+    <div class="hero-stage rv" id="hero-stage">
+      <svg id="iso" viewBox="0 0 1120 900" role="img" aria-label="Animated hospital cross-section"></svg>
+      <div class="hero-kpi" id="hmini" aria-live="polite"></div>
+      <div class="zoom-panel card" id="zoomp" hidden>
+        <div style="display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:8px;flex-wrap:wrap">
+          <div><div class="eyebrow" id="zeye">Outpatients · live</div><div style="font:700 24px 'Plus Jakarta Sans';margin-top:4px" id="ztitle">Every token. <em class="s">In order.</em></div></div>
+          <button class="btn g" id="back" type="button" style="padding:10px 18px">← Back</button>
+        </div>
+        <svg id="zsvg" viewBox="40 30 920 560"></svg>
+        <div id="zdata" class="exp-data" style="margin-top:8px"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="sec" id="tools" style="background:linear-gradient(#fbfcfe,#f3f9f6)">
+  <div class="wrap">
+    <div class="rv"><div class="eyebrow">Our tools</div>
+    <h2 style="margin-top:14px">First up: Ekko. <em class="s">Coming soon.</em></h2></div>
+    <div class="tools-grid">
+      <div class="card ek-card rv" id="ekcard">
+        <div>
+          <div style="display:flex;gap:14px;align-items:center" id="ek-brand"></div>
+          <div style="display:flex;gap:8px;margin:22px 0 14px"><span class="pl pm">● Coming soon</span><span class="pl pb">First tool</span></div>
+          <p style="font:700 30px 'Plus Jakarta Sans';line-height:1.2;letter-spacing:-.02em">The whole hospital.<br><em class="s" style="color:var(--teal);font-size:34px">One calm screen.</em></p>
+          <div id="chips" style="display:flex;flex-wrap:wrap;gap:8px;margin:22px 0 28px"></div>
+          <div style="display:flex;flex-wrap:wrap;gap:12px">
+            <a class="btn p" href="get-ekko.html">Get early access ↗</a>
+            <a class="btn g" href="get-ekko.html">Join the waitlist</a>
+          </div>
+        </div>
+        <div class="ek-prev" id="ekprev" aria-hidden="true"></div>
+      </div>
+      <div class="card soon-card rv" id="soon">
+        <span class="pl pv">Coming later</span>
+        <div style="font:700 32px 'Plus Jakarta Sans';margin-top:18px;letter-spacing:-.02em;line-height:1.15">Next: tools for other kinds of management.</div>
+        <p class="lead" style="font-size:17px;margin-top:12px">Marketing and beyond. Stay tuned.</p>
+        <div id="soontiles" style="margin-top:28px;display:grid;gap:12px"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="sec" id="how" style="background:linear-gradient(#f3f9f6,#f7f6fd)">
+  <div class="wrap">
+    <div class="rv" style="text-align:center"><div class="eyebrow">How it works</div>
+    <h2 style="margin-top:14px">Four steps. <em class="s">Then it just runs.</em></h2></div>
+    <div class="how-track">
+      <div class="how-bar"><i id="hbar"></i></div>
+      <div class="how-grid" id="how-grid" role="list"></div>
+    </div>
+  </div>
+</section>
+
+<section class="sec" id="inside" style="background:linear-gradient(#f7f6fd,#fbfcfe)">
+  <div class="wrap">
+    <div class="rv"><div class="eyebrow" id="inside-eye"></div>
+    <h2 style="margin-top:12px">Every module. <em class="s">One calm workspace.</em></h2></div>
+    <div class="exp rv">
+      <div class="sb" id="sbar" role="tablist" aria-label="Ekko modules"></div>
+      <div class="exp-scene">
+        <div id="ctitle" style="display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap;padding:2px 4px 8px"></div>
+        <svg id="csvg" viewBox="40 30 920 560" role="img" aria-label="Live module scene"></svg>
+        <div id="cdata" class="exp-data"></div>
+      </div>
+      <div class="eu" id="eui" aria-live="polite"></div>
+    </div>
+  </div>
+</section>
+
+<section class="sec" id="ma" style="background:linear-gradient(#fbfcfe,#f1f8f4)">
+  <div class="wrap">
+    <div style="display:flex;justify-content:space-between;align-items:flex-end;gap:20px;flex-wrap:wrap">
+      <div class="rv"><div class="eyebrow">Manage · Analyse</div>
+      <h2 style="margin-top:12px">Run today. <em class="s">Read the numbers.</em></h2></div>
+      <div class="tabs rv" id="tabs" role="group" aria-label="View mode">
+        <div class="pill" id="pill"></div>
+        <button type="button" id="tm" class="on" aria-pressed="true">Manage</button>
+        <button type="button" id="ta" aria-pressed="false">Analyse</button>
+      </div>
+    </div>
+    <div class="card ma-box rv" id="mabox">
+      <div id="mal"></div>
+      <div class="eu" id="mar" style="max-height:none"></div>
+    </div>
+  </div>
+</section>
+
+<section class="sec" id="modules">
+  <div class="wrap">
+    <div class="rv"><div class="eyebrow">Learn Ekko</div>
+    <h2 style="margin-top:14px">Learn it once. <em class="s">Use it daily.</em></h2>
+    <p class="lead" style="margin-top:12px">Short walkthroughs of every Ekko module.</p></div>
+    <div class="toolsel rv" id="toolsel" role="tablist" aria-label="Choose a tool"></div>
+    <div class="learn-grid">
+      <div class="player card rv" id="player">
+        <div class="ph" id="pholder"><div><div style="font-size:48px;opacity:.35">▷</div><div style="font:700 22px 'Plus Jakarta Sans';margin-top:12px">Pick a module</div><p style="color:var(--ink2);margin-top:6px">Watch opens here.</p></div></div>
+        <video id="mvid" controls playsinline preload="metadata"></video>
+      </div>
+      <div class="rv" id="modlist" role="list"></div>
+    </div>
+  </div>
+</section>
+
+<section class="sec" id="cta">
+  <div class="wrap">
+    <div class="band rv" id="bandc">
+      <svg id="bsvg" viewBox="0 0 1620 600" aria-hidden="true"></svg>
+      <div style="position:relative">
+        <div class="eyebrow">Ekko · Coming soon</div>
+        <h2 style="margin-top:16px;font-size:clamp(40px,6vw,92px)">Be first to run<br><em class="s">in rhythm.</em></h2>
+        <div style="display:flex;flex-wrap:wrap;gap:12px;margin-top:36px">
+          <a class="btn p" href="get-ekko.html">Get early access ↗</a>
+          <a class="btn g" href="get-ekko.html">Join the waitlist</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="sec" id="faq" style="background:linear-gradient(#fbfcfe,#f6f3fd)">
+  <div class="wrap faq-grid">
+    <div class="rv"><div class="eyebrow">FAQ</div>
+    <h2 style="margin-top:14px">Quick <em class="s">answers.</em></h2>
+    <p class="lead" style="margin-top:16px">Or write us at <a href="mailto:dhanjiva.health@gmail.com" style="color:var(--teal);font-weight:600">dhanjiva.health@gmail.com</a>.</p><div class="faq-vis" aria-hidden="true"><i class="o1"></i><i class="o2"></i><i class="o3"></i><span id="faqmark"></span></div>
+    </div>
+    <div class="rv" id="faqlist"></div>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="wrap foot">
+    <div>
+      <a class="brand" href="#hero"><img src="assets/logo-mark.png" width="40" height="42" alt="">Dhanjiva</a>
+      <p style="color:var(--ink2);margin-top:18px;font-size:17px">Tools for the people who run hospitals.</p>
+      <div class="foot-links">
+        <a href="#tools">Tools</a><a href="#modules">Modules</a><a href="#faq">Help</a>
+        <a href="mailto:dhanjiva.health@gmail.com" style="color:var(--teal);font-weight:600">dhanjiva.health@gmail.com</a>
+        <span style="display:flex;gap:8px;align-items:center;color:var(--teal);font-weight:600" id="foot-ekko"></span>
+      </div>
+    </div>
+    <div style="text-align:right">
+      <a class="btn p" href="get-ekko.html">Get early access ↗</a>
+      <p style="color:var(--mute);margin-top:24px">© 2026 Dhanjiva</p>
+    </div>
+  </div>
+</footer>
+
+<script src="js/chars.js"></script>
+<script src="js/scenes.js"></script>
+<script src="js/site-core.js"></script>
+<script src="js/site.js"></script>
+</body>
+</html>
