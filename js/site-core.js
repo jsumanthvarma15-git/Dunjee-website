@@ -23,41 +23,106 @@ function isoPerson(x,y,o){const p=P(x,y,0);return person(Object.assign({x:p[0],y
 // Hero map is drawn in three stacked layers so only moving people repaint each frame.
 // Rooms (static) re-render only on hover; labels + hit areas never re-render, so clicks always land.
 const ROOM_TO_MOD=[1,2,4,5,3,7];
-function isoRoom(i,lift){const [n,x,y,c]=ROOMS[i];let r='';
- r+=`<polygon points="${pts([P(x,y,lift),P(x+4,y,lift),P(x+4,y+4,lift),P(x,y+4,lift)])}" fill="${shade(c,1.06)}" stroke="#ffffff" stroke-width="2"/>`;
- r+=`<polygon points="${pts([P(x,y,lift),P(x+4,y,lift),P(x+4,y,lift+1.6),P(x,y,lift+1.6)])}" fill="${shade(c,.92)}"/><polygon points="${pts([P(x,y,lift),P(x,y+4,lift),P(x,y+4,lift+1.6),P(x,y,lift+1.6)])}" fill="${shade(c,.84)}"/>`;
- if(i==0){r+=box(x+.4,y+.4,lift,.5,.5,.9,'#ffffff');for(let k=0;k<3;k++)r+=box(x+1.4+k*.8,y+2.6,lift,.6,.5,.35,'#b7aaf0');r+=box(x+3,y+.3,lift,.8,.2,1.2,'#ffffff')}
- if(i==1){for(let k=0;k<2;k++){r+=box(x+.4+k*1.9,y+.4,lift,1.4,.8,.35,'#ffffff');r+=box(x+.4+k*1.9,y+.4,lift+.35,.4,.8,.12,'#cfe3f6')}}
- if(i==2){for(let k=0;k<3;k++)r+=box(x+.3+k*1.2,y+.2,lift,.9,.4,1.3,'#ffffff');r+=box(x+2.6,y+2.6,lift,1.2,.6,.6,'#ffffff')}
- if(i==3){r+=box(x+.6,y+1.4,lift,2,.8,.45,'#e7c8b0');r+=box(x+.8,y+.3,lift,1.6,.2,1.1,'#ffffff')}
- if(i==4){r+=box(x+.3,y+.3,lift,3.2,.6,.7,'#ffffff');r+=box(x+2.4,y+.4,lift+.7,.7,.4,.4,'#7cc7c0');for(let k=0;k<4;k++)r+=box(x+.5+k*.25,y+.45,lift+.7,.1,.1,.35,'#f4a7b4')}
+function isoRoom(i,lift){const [n,x,y,c]=ROOMS[i];let r='';const z=lift;
+ r+=`<polygon points="${pts([P(x,y,z),P(x+4,y,z),P(x+4,y+4,z),P(x,y+4,z)])}" fill="${shade(c,1.06)}" stroke="#ffffff" stroke-width="2"/>`;
+ // floor tiles (subtle)
+ for(let k=1;k<4;k++)r+=`<path d="M${P(x+k,y,z).join(',')} L${P(x+k,y+4,z).join(',')} M${P(x,y+k,z).join(',')} L${P(x+4,y+k,z).join(',')}" stroke="#ffffff" stroke-opacity=".45" stroke-width="1"/>`;
+ r+=`<polygon points="${pts([P(x,y,z),P(x+4,y,z),P(x+4,y,z+1.6),P(x,y,z+1.6)])}" fill="${shade(c,.95)}"/><polygon points="${pts([P(x,y,z),P(x,y+4,z),P(x,y+4,z+1.6),P(x,y,z+1.6)])}" fill="${shade(c,.86)}"/>`;
+ r+=`<polygon points="${pts([P(x,y,z),P(x+4,y,z),P(x+4,y,z+.12),P(x,y,z+.12)])}" fill="#ffffff" opacity=".5"/><polygon points="${pts([P(x,y,z),P(x,y+4,z),P(x,y+4,z+.12),P(x,y,z+.12)])}" fill="#ffffff" opacity=".35"/>`;
+ r+=`<polyline points="${pts([P(x,y+4,z+1.6),P(x,y,z+1.6),P(x+4,y,z+1.6)])}" fill="none" stroke="#ffffff" stroke-width="3" stroke-linejoin="round"/>`;
+ const fy=fY(x,y,z),fx=fX(x,y,z);
+ const win=(f,u)=>rectOn(f,u,.7,.9,.55,'#ffffff')+rectOn(f,u+.06,.75,.78,.45,'#dcecf8')+rectOn(f,u+.06,.75,.78,.14,'#cfe8dc');
+ if(i==0){// Outpatients
+  r+=rectOn(fy,2.2,.82,1.3,.62,'#13294b')+rectOn(fy,2.26,.86,1.18,.54,'#ffffff')+rectOn(fy,2.34,1.12,.5,.18,'#13294b')+rectOn(fy,3.0,1.14,.32,.08,'#2f8a63');
+  r+=rectOn(fx,2.5,0,.8,1.25,'#ffffff')+rectOn(fx,2.56,0,.68,1.18,'#7fb8e4')+rectOn(fx,2.66,.6,.2,.3,'#cfe3f6')+win(fx,.6);
+  r+=isoRug(x+1,y+1.9,z,2.8,1.1,'#ffffff');
+  for(let k=0;k<4;k++)r+=isoChair(x+1.05+k*.66,y+2.1,z,'#b7aaf0','y');
+  r+=box(x+3.35,y+.5,z,.3,.3,.1,'#d5e0ec')+box(x+3.44,y+.58,z+.1,.12,.12,.5,'#c9d4e0')+box(x+3.3,y+.48,z+.6,.4,.34,.5,'#ffffff')+(()=>{const f=fY(x+3.3,y+.82,z+.6);return rectOn(f,.06,.18,.28,.24,'#cfe6f7')})();
+  r+=isoPlant(x+.35,y+3.55,z,1)+isoPlant(x+3.7,y+3.6,z,.85)}
+ if(i==1){// Beds
+  r+=win(fy,.9)+win(fy,2.5);
+  r+=rectOn(fx,.2,1.1,.5,.32,'#ffffff')+rectOn(fx,.25,1.15,.4,.22,'#2f8a63');
+  [[.3,.3,'#cfe3f6',{skin:'#e9b892',hair:'#c7ccd2'}],[.3,1.75,'#f6d9c6',{skin:'#b07552',hair:'#1f2a3d'}]].forEach(([u,v,bl,oc])=>{r+=isoIV(x+u+.05,y+v-.12,z);r+=isoBed(x+u,y+v,z,bl,oc);r+=isoSideTable(x+u-.05,y+v+.9,z)});
+  r+=box(x+3.2,y+.15,z,.6,.4,.9,'#ffffff')+box(x+3.24,y+.55,z+.05,.52,.01,.8,'#eef4f1');
+  r+=isoPlant(x+3.6,y+3.6,z,.85)}
+ if(i==2){// Pharmacy
+  r+=isoCupboard(x+.02,y+.5,z,1.3,'x',2);r+=isoCupboard(x+.5,y+.02,z,1.2,'y',0);r+=isoCupboard(x+1.85,y+.02,z,1.2,'y',4);
+  r+=rectOn(fy,3.2,1.0,.62,.34,'#ffffff')+rectOn(fy,3.43,1.07,.16,.2,'#5bb58c')+rectOn(fy,3.36,1.13,.3,.08,'#5bb58c');
+  r+=isoPlant(x+.4,y+3.55,z,.9)}
+ if(i==3){// Finance
+  r+=win(fx,.5)+rectOn(fy,2.3,.7,1.3,.65,'#ffffff');[.3,.42,.36,.55,.48].forEach((b,k)=>r+=rectOn(fy,2.42+k*.22,.78,.14,b*.9,['#b7aaf0','#9fd6bd','#7fb8e4','#f2bf9c','#9fd6bd'][k]));
+  r+=box(x+.04,y+2.7,z,.42,.7,1,'#ffffff');{const f=fX(x+.46,y+2.7,z);[.1,.4,.7].forEach(v=>r+=rectOn(f,.06,v,.58,.24,'#f7f2ec')+rectOn(f,.28,v+.1,.14,.04,'#c9b49c'))}
+  r+=isoRug(x+.9,y+.9,z,2.6,1.8,'#ffffff');
+  [[.6,.6],[2.2,.6]].forEach(([u,v],k)=>{r+=isoDesk(x+u,y+v,z,1.2,.62,'#efe0cc','y');r+=isoMonitor(x+u+.42,y+v+.08,z+.68,'y');r+=box(x+u+.3,y+v+.42,z+.68,.4,.14,.02,'#dfe6ee');r+=box(x+u+.1,y+v+.2,z+.68,.12,.12,.12,k?'#9fd6bd':'#f4a7b4');r+=isoOfficeChair(x+u+.36,y+v+.86,z,k?'#c0703a':'#33496e','y')});
+  r+=isoPlant(x+3.6,y+3.5,z,.9)}
+ if(i==4){// Laboratory
+  r+=win(fx,.7);r+=rectOn(fy,.4,1.15,2.3,.05,'#d5e0ec');for(let k=0;k<8;k++)r+=rectOn(fy,.5+k*.27,1.2,.14,.2+(k%3)*.05,['#ffffff','#e7c08f','#d2ebe2'][k%3],'stroke="#c9d6e6" stroke-width=".6"');
+  r+=box(x+.3,y+.05,z,2.6,.62,.72,'#ffffff');{const f=fY(x+.3,y+.67,z);for(let k=0;k<5;k++)r+=rectOn(f,.06+k*.51,.06,.46,.56,'#f3f6f9')+rectOn(f,.22+k*.51,.5,.14,.03,'#b8c4d2')}
+  r+=box(x+.26,y+.01,z+.72,2.68,.7,.06,'#d2ebe2');
+  r+=isoMicroscope(x+.75,y+.42,z+.78)+isoTubes(x+1.05,y+.25,z+.78,5)+isoAnalyser(x+1.75,y+.1,z+.78,'y');
+  r+=isoFridge(x+3.15,y+.05,z,'y');
+  r+=box(x+.9,y+1.15,z,.1,.1,.5,'#9aa7b9')+box(x+.76,y+1.01,z+.5,.38,.38,.07,'#227568');
+  r+=isoPlant(x+3.6,y+3.6,z,.85)}
+ if(i==5){// Ambulance bay
+  r+=rectOn(fy,.5,0,2.6,1.3,'#c9d8e8');for(let k=0;k<9;k++)r+=rectOn(fy,.56,.06+k*.135,2.48,.1,'#e9f1f9');
+  r+=rectOn(fy,1.25,1.36,1.1,.2,'#c0392b');
+  for(let k=0;k<6;k++)r+=poly([P(x+.4+k*.55,y+3.5,z+.01),P(x+.7+k*.55,y+3.5,z+.01),P(x+.6+k*.55,y+3.8,z+.01),P(x+.3+k*.55,y+3.8,z+.01)],'#f6d27a','opacity=".7"');
+  r+=poly([P(x+.4,y+1.2,z+.01),P(x+3.4,y+1.2,z+.01),P(x+3.4,y+2.7,z+.01),P(x+.4,y+2.7,z+.01)],'none','stroke="#ffffff" stroke-width="2" stroke-dasharray="6 6"');
+  r+=box(x+.05,y+.4,z,.4,.6,.9,'#ffffff')+(()=>{const f=fX(x+.45,y+.4,z);return rectOn(f,.1,.4,.4,.36,'#eef4fa')+rectOn(f,.22,.5,.16,.16,'#f2a493')})();
+  r+=isoStretcher(x+.6,y+3,z,false)}
  return r}
+function isoTree(x,y,s=1,c='#9fd6bd'){const b=P(x,y,0),t=P(x,y,1.25*s);return`<ellipse cx="${b[0]}" cy="${b[1]+2}" rx="${22*s}" ry="${10*s}" fill="#13294b" opacity=".08"/><rect x="${b[0]-3*s}" y="${t[1]+8*s}" width="${6*s}" height="${b[1]-t[1]-6*s}" rx="${3*s}" fill="#c9a27a"/><circle cx="${t[0]}" cy="${t[1]}" r="${24*s}" fill="${c}"/><circle cx="${t[0]-9*s}" cy="${t[1]-9*s}" r="${13*s}" fill="#ffffff" opacity=".28"/><circle cx="${t[0]+10*s}" cy="${t[1]+6*s}" r="${15*s}" fill="${shade(c,.9)}" opacity=".6"/>`}
 function isoStatic(hov){
- const sc=P(7,4.6,-.6);let s=`<defs><radialGradient id="isoSh"><stop offset="0" stop-color="#13294b" stop-opacity=".16"/><stop offset="1" stop-color="#13294b" stop-opacity="0"/></radialGradient><radialGradient id="sun" cx="560" cy="220" r="620" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#fff7e6" stop-opacity=".35"/><stop offset="1" stop-color="#fff7e6" stop-opacity="0"/></radialGradient></defs>`;
- s+=`<ellipse cx="${sc[0]}" cy="${sc[1]+40}" rx="560" ry="300" fill="url(#isoSh)"/>`;
+ const sc=P(7,4.6,-.6);let s=`<defs><radialGradient id="isoSh"><stop offset="0" stop-color="#13294b" stop-opacity=".16"/><stop offset="1" stop-color="#13294b" stop-opacity="0"/></radialGradient><radialGradient id="lawnG" cx="${sc[0]}" cy="${sc[1]}" r="560" gradientUnits="userSpaceOnUse" gradientTransform="translate(${sc[0]} ${sc[1]}) scale(1 .62) translate(${-sc[0]} ${-sc[1]})"><stop offset=".55" stop-color="#e9f4ee" stop-opacity=".9"/><stop offset=".86" stop-color="#e9f4ee" stop-opacity="0"/></radialGradient><radialGradient id="sun" cx="560" cy="220" r="620" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#fff7e6" stop-opacity=".35"/><stop offset="1" stop-color="#fff7e6" stop-opacity="0"/></radialGradient></defs>`;
+ s+=`<ellipse cx="${sc[0]}" cy="${sc[1]+30}" rx="520" ry="270" fill="url(#isoSh)"/>`;s+=`<polygon points="${pts([P(-1.5,-1.5,-.62),P(15.5,-1.5,-.62),P(15.5,10.5,-.62),P(-1.5,10.5,-.62)])}" fill="url(#lawnG)"/>`;[[-1.1,1.2,.9,'#b6e2cc'],[15.1,1.4,1,'#9fd6bd']].forEach(([x,y,k,c])=>{if(y<5)s+=isoTree(x,y,k,c)});
  s+=box(-.6,-.6,-.6,15.2,10.2,.6,'#ffffff','#e4eaf2');
  s+=`<polygon points="${pts([P(-.6,4,0),P(14.6,4,0),P(14.6,5,0),P(-.6,5,0)])}" fill="#eef3f9"/>`;
  [0,1,2,3,4,5].sort((a,b)=>(ROOMS[a][1]+ROOMS[a][2])-(ROOMS[b][1]+ROOMS[b][2])).forEach(i=>s+=isoRoom(i,hov==i?.25:0));
+ [[-1.1,7.8,1.05,'#9fd6bd'],[15.1,7,.85,'#b6e2cc'],[3,10.1,.85,'#9fd6bd'],[11.5,10.1,1,'#b6e2cc']].forEach(([x,y,k,c])=>s+=isoTree(x,y,k,c));
  return s+`<rect x="-200" y="-100" width="1500" height="1100" fill="url(#sun)"/>`}
-function isoUI(){let s='';ROOMS.forEach(([n,x,y,c,cd],i)=>{const lp=P(x+2,y+2,2.6);
+function isoUI(){let s='';ROOMS.forEach(([n,x,y,c,cd],i)=>{const lp=P(x+1.1,y+1.1,2.45);
   const hit=[P(x,y+4,1.6),P(x,y,1.6),P(x+4,y,1.6),P(x+4,y,0),P(x+4,y+4,0),P(x,y+4,0),P(x,y,0)];
-  s+=`<g class="room-g" data-room="${i}" id="room${i}" tabindex="0" role="button" aria-label="Open ${n}"><polygon class="room-hit" points="${pts(hit)}" fill="#000" fill-opacity="0"/><g transform="translate(${lp[0]},${lp[1]})"><g class="room-l"><rect x="-80" y="-20" width="160" height="40" rx="20" fill="#ffffff" stroke="#e4eaf2" stroke-width="1.5" style="--rc:${cd}"/><circle cx="-58" cy="0" r="6" fill="${cd}"/><text x="6" y="6" text-anchor="middle" font-family="Inter" font-weight="700" font-size="15" fill="#13294b">${n}</text><text x="66" y="6" text-anchor="middle" font-family="Inter" font-weight="700" font-size="15" fill="${cd}" class="room-arrow">→</text></g></g></g>`});
+  s+=`<g class="room-g" data-room="${i}" id="room${i}" tabindex="0" role="button" aria-label="Open ${n}"><polygon class="room-hit" points="${pts(hit)}" fill="#000" fill-opacity="0"/><g transform="translate(${lp[0]},${lp[1]})"><g class="room-s"><g class="room-l"><rect x="-80" y="-20" width="160" height="40" rx="20" fill="#ffffff" stroke="#e4eaf2" stroke-width="1.5" style="--rc:${cd}"/><circle cx="-58" cy="0" r="6" fill="${cd}"/><text x="6" y="6" text-anchor="middle" font-family="Inter" font-weight="700" font-size="15" fill="#13294b">${n}</text><text x="66" y="6" text-anchor="middle" font-family="Inter" font-weight="700" font-size="15" fill="${cd}" class="room-arrow">→</text></g></g></g></g>`});
  return s}
-function isoDynamic(t,hov){const ppl=[];
- {const [n,x,y]=ROOMS[5];const lift=hov==5?.25:0;const ax=x+.4+((t*.12)%1<.5?0:Math.pow(((t*.12)%1-.5)*2,2)*2.6);ppl.push([x+y+1.2,box(ax,y+1.2,lift,2.2,1.1,1,'#ffffff')+box(ax,y+1.2,lift+.35,2.2,1.1,.14,'#227568')+box(ax+.9,y+1.5,lift+1,.5,.5,.12,Math.sin(t*12)>0?'#f4a7b4':'#7fb8e4')])}
- for(let k=0;k<3;k++){const lt=(t*.25+k/3)%1;const x=L(-.4,3,lt),y=3.4;ppl.push([x+y,isoPerson(x,y,{pose:'walk',ph:t*7+k,shirt:PAL.shirt[k],hair:PAL.hair[k],skin:PAL.skin[k]})])}
- ppl.push([2.5+2.4,isoPerson(1.7,2.4,{pose:'sit',ph:t,shirt:'#f4a7b4'})]);ppl.push([5,isoPerson(3.4,.9,{pose:'work',ph:t,coat:'#f3f7fc',shirt:'#7fb8e4',f:-1})]);
- [[0,'#9fd6bd',1],[.5,'#f2bf9c',-1],[.25,'#b7aaf0',1],[.75,'#7fb8e4',-1]].forEach(([o,sh,d],k)=>{let q=(t*.06+o)%1;if(d<0)q=1-q;const x=L(-.2,14.2,q),y=4.5;ppl.push([x+y,isoPerson(x,y,{pose:'walk',ph:t*6+k,shirt:sh,f:d,hair:PAL.hair[k+1],skin:PAL.skin[(k+2)%4],coat:k==2?'#f3f7fc':null,outfit:k==1?'scrubs':undefined,top:k==1?'#7cc7c0':undefined})])});
- {const q=(t*.12)%1;const x=L(5.4,8.6,q);ppl.push([x+2.8,box(x,2.6,0,1.2,.5,.3,'#ffffff')]);ppl.push([x+2.8+.1,isoPerson(x-.2,2.9,{pose:'push',ph:t*7,shirt:'#9fd6bd'})])}
- ppl.push([13.8,isoPerson(11.3,2.4,{pose:'reach',ph:t,coat:'#f3f7fc',shirt:'#9fd6bd',hair:'#5b3d2b'})]);
- ppl.push([8,isoPerson(2.4,6.2,{pose:'sit',ph:t,shirt:'#b7aaf0'})]);ppl.push([12,isoPerson(7.6,6.4,{pose:'work',ph:t,coat:'#f3f7fc',shirt:'#7cc7c0',hs:'bun'})]);
- ppl.push([20,isoPerson(13.4,8.6,{pose:'stand',ph:t,outfit:'casual',top:'#227568',f:-1})]);
- [[.12,'#f4a7b4',1,'long'],[.62,'#7fb8e4',-1,'short'],[.38,'#f2bf9c',1,'bun']].forEach(([o,sh,d,hs],k)=>{let q=(t*.045+o)%1;if(d<0)q=1-q;const x=L(-.2,14.2,q),y=4.25+k*.12;ppl.push([x+y,isoPerson(x,y,{pose:'walk',ph:t*6.2+k*2,shirt:sh,f:d,hs,hair:PAL.hair[k],skin:PAL.skin[(k+1)%5],item:k==1?'clip':null})])});
- ppl.push([2+1.2,isoPerson(3.2,2.0,{pose:'read',ph:t,coat:'#f3f7fc',shirt:'#b7aaf0',item:'clip',hs:'bun',f:-1})]);
- {const q=(Math.sin(t*.5)+1)/2;const x=L(6,8.6,q);ppl.push([x+3.4,isoPerson(x,3.4,{pose:'walk',ph:t*5.5,outfit:'scrubs',top:'#7cc7c0',hs:'cap',f:Math.cos(t*.5)>0?1:-1})])}
- ppl.push([11+3.2,isoPerson(12.6,3.2,{pose:'talk',ph:t,shirt:'#f2bf9c',hs:'long',f:-1})]);ppl.push([1+7.5,isoPerson(3.6,7.4,{pose:'work',ph:t,outfit:'suit',top:'#33496e',f:-1})]);
- ppl.push([6+8,isoPerson(6.4,8.2,{pose:'read',ph:t,outfit:'overalls',top:'#e8f0f7',item:'clip'})]);
- for(let k=0;k<3;k++){const q=(t*.6+k/3)%1;const p=P(1.6,6.2,1.4+q*1.2);ppl.push([90,`<circle cx="${p[0]}" cy="${p[1]}" r="7" fill="#f6d27a" stroke="#e2b54a" opacity="${Math.sin(q*Math.PI).toFixed(3)}"/>`])}
+function isoPersonZ(x,y,z,o){const p=P(x,y,z);return person(Object.assign({x:p[0],y:p[1],s:.3,v2:1},o))}
+function isoDynamic(t,hov){const ppl=[];const Z=i=>hov==i?.25:0;const add=(k,s)=>ppl.push([k,s]);
+ // --- Outpatients (0,0)
+ {const z=Z(0);
+  add(1.7,isoPersonZ(1.25,.48,z,{pose:'work',ph:t,f:-1,coat:'#f3f7fc',shirt:'#7fb8e4',hs:'bun',hair:'#3a2c2a',skin:PAL.skin[1]}));
+  add(2.3,isoReception(.55,.78,z,'#cfe3f6'));
+  const seat=k=>[1.3+k*.66,2.34];
+  [[0,{top:'#f2bf9c',hair:'#c7ccd2',skin:PAL.skin[3]}],[1,{top:'#9fd6bd',hs:'long',hair:'#1f2a3d',skin:PAL.skin[2]}],[3,{top:'#b7aaf0',hs:'bun',hair:'#5b3d2b',skin:PAL.skin[0]}]].forEach(([k,o])=>{const [sx,sy]=seat(k);add(sx+sy+.3,isoPersonZ(sx,sy,z,Object.assign({pose:'sit',ph:t+k,f:-1,outfit:'casual',bottom:'#33496e'},o)))});
+  for(let k=0;k<2;k++){const lt=(t*.2+k/2)%1;const x=L(-.4,3.2,lt),y=3.25+k*.25;add(x+y,isoPersonZ(x,y,0,{pose:'walk',ph:t*7+k,f:1,shirt:PAL.shirt[k],hair:PAL.hair[k],skin:PAL.skin[k]}))}
+  add(1+1.8,isoPersonZ(2.3,.95,z,{pose:'talk',ph:t,f:1,shirt:'#f4a7b4',hs:'long',hair:'#3a2c2a',skin:PAL.skin[1]}))}
+ // --- Beds (5,0)
+ {const z=Z(1);const q=(t*.1)%1;const e=q<.45?EOs(q/.45):q<.7?1:1-EOs((q-.7)/.3);const sx=L(5.9,7.9,e);const back=q>=.7;
+  add(sx+3.25,isoStretcher(sx,3.02,z,true,'#f6d9c6'));
+  add(sx+3.3,isoPersonZ(back?sx+1.35:sx-.3,3.25,z,{pose:q>.45&&q<.7?'hold':'push',ph:t*6.4,f:back?-1:1,outfit:'scrubs',top:'#9fd6bd',hair:'#2b2b33',skin:PAL.skin[0]}));
+  add(7.4+1.2,isoPersonZ(7.4,1.25,z,{pose:'read',ph:t,f:-1,outfit:'scrubs',top:'#7cc7c0',hs:'cap',hair:'#3a2c2a',skin:PAL.skin[1],item:'clip'}))}
+ // --- Pharmacy (10,0)
+ {const z=Z(2);
+  add(10.65+1.25,isoPersonZ(10.65,1.25,z,{pose:'reach',ph:t,f:-1,coat:'#f3f7fc',shirt:'#9fd6bd',hair:'#5b3d2b',skin:PAL.skin[3]}));
+  add(12.9+2.05,isoPersonZ(12.9,2.08,z,{pose:'work',ph:t,f:-1,coat:'#f3f7fc',shirt:'#b7aaf0',hs:'bun',hair:'#1f2a3d',skin:PAL.skin[2]}));
+  add(15.5,isoCounter(12.2,2.3,z,1.5,.5)+isoTill(12.95,2.4,z+.78)+isoMonitor(12.4,2.36,z+.78,'y'));
+  add(16.3,isoPersonZ(13.1,3.25,z,{pose:'talk',ph:t,f:1,shirt:'#f2bf9c',hs:'long',hair:'#3a2c2a',skin:PAL.skin[0],bottom:'#33496e'}))}
+ // --- Finance (0,5)
+ {const z=Z(3);
+  add(1.18+6.68,isoPersonZ(1.18,6.62,z+.02,{pose:'sit',ph:t,f:1,outfit:'suit',top:'#33496e',hair:'#2b2b33',skin:PAL.skin[0]}));
+  add(2.78+6.68,isoPersonZ(2.78,6.62,z+.02,{pose:'sit',ph:t+2,f:1,top:'#f4a7b4',hs:'long',hair:'#3a2c2a',skin:PAL.skin[2],outfit:'casual'}));
+  {const q=(Math.sin(t*.45)+1)/2;const x=L(.7,3.3,q);add(x+8.3,isoPersonZ(x,8.3,z,{pose:'walk',ph:t*5.5,f:Math.cos(t*.45)>0?1:-1,shirt:'#9fd6bd',hair:'#5b3d2b',skin:PAL.skin[3],item:'clip'}))}
+  for(let k=0;k<3;k++){const q=(t*.6+k/3)%1;const p=P(1.3,5.95,1.5+q*1.1);add(90,`<circle cx="${p[0]}" cy="${p[1]}" r="6" fill="#f6d27a" stroke="#e2b54a" opacity="${Math.sin(q*Math.PI).toFixed(3)}"/>`)}}
+ // --- Laboratory (5,5)
+ {const z=Z(4);
+  add(5.95+6.2,isoPersonZ(5.95,6.18,z+.2,{pose:'sit',ph:t,f:1,coat:'#f3f7fc',shirt:'#7cc7c0',hair:'#1f2a3d',skin:PAL.skin[0]}));
+  add(7.15+5.95,isoPersonZ(7.15,5.95,z,{pose:'work',ph:t,f:1,coat:'#f3f7fc',shirt:'#f4a7b4',hs:'bun',hair:'#3a2c2a',skin:PAL.skin[1]}));
+  {const q=(t*.09)%1;const x=L(5.5,8.6,q<.5?q*2:2-q*2);add(x+7.7,isoPersonZ(x,7.7,z,{pose:'walk',ph:t*6,f:q<.5?1:-1,coat:'#f3f7fc',shirt:'#b7aaf0',hair:'#5b3d2b',skin:PAL.skin[3],item:'tube'}))}}
+ // --- Ambulance (10,5)
+ {const z=Z(5);const q=(t/12)%1;let ax,al=1;if(q<.33){ax=L(11.6,10.5,EOs(q/.33));al=C01(q/.08)}else if(q<.75)ax=10.5;else{ax=L(10.5,11.6,Math.pow((q-.75)/.25,2));al=1-C01((q-.92)/.08)}
+  const fl=q<.4&&Math.sin(t*12)>0;add(ax+6.25+1.1,`<g opacity="${al.toFixed(3)}">${isoAmbulanceVan(ax,6.25,z,fl)}</g>`);
+  add(13.3+7.9,isoPersonZ(13.3,7.9,z,{pose:'talk',ph:t,f:-1,outfit:'scrubs',top:'#7cc7c0',hs:'cap',hair:'#2b2b33',skin:PAL.skin[2],badge:1}))}
+ // --- corridor
+ [[0,'#9fd6bd',1],[.5,'#f2bf9c',-1],[.25,'#b7aaf0',1],[.75,'#7fb8e4',-1]].forEach(([o,sh,d],k)=>{let q=(t*.06+o)%1;if(d<0)q=1-q;const x=L(-.2,14.2,q),y=4.5;add(x+y,isoPersonZ(x,y,0,{pose:'walk',ph:t*6+k,shirt:sh,f:d,hair:PAL.hair[k+1],skin:PAL.skin[(k+2)%4],coat:k==2?'#f3f7fc':null,outfit:k==1?'scrubs':undefined,top:k==1?'#7cc7c0':undefined}))});
+ [[.12,'#f4a7b4',1,'long'],[.62,'#7fb8e4',-1,'short'],[.38,'#f2bf9c',1,'bun']].forEach(([o,sh,d,hs],k)=>{let q=(t*.045+o)%1;if(d<0)q=1-q;const x=L(-.2,14.2,q),y=4.25+k*.12;add(x+y,isoPersonZ(x,y,0,{pose:'walk',ph:t*6.2+k*2,shirt:sh,f:d,hs,hair:PAL.hair[k],skin:PAL.skin[(k+1)%5],item:k==1?'clip':null}))});
  return ppl.sort((a,b)=>a[0]-b[0]).map(i=>i[1]).join('')}
 
 // ---------- page ----------
