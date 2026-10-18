@@ -32,7 +32,7 @@ The form POSTs via FormSubmit AJAX to **dhanjiva.health@gmail.com**.
 
 ## Module videos
 
-Eleven walkthroughs live under `assets/modules/` (from `/workspace/ekko-module-videos/`). Wired in Learn Ekko with Watch buttons. They may include demo/test data.
+Eleven Learn Ekko walkthroughs live in `assets/modules/` as web-optimised MP4s (H.264 Main, 1280px wide, CRF 30, AAC 64k mono voice track, `+faststart`), each with a poster JPG. `modules.json` lists them; the first lesson is preselected in the player and every lesson plays inline. Ekko itself is still marked coming soon (`"available": false`).
 
 ## Deploy
 

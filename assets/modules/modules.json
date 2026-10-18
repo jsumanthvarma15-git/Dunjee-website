@@ -4,7 +4,8 @@
       "id": "ekko",
       "name": "Ekko",
       "category": "Hospital Administration",
-      "available": false, "status": "coming-soon"
+      "available": false,
+      "status": "coming-soon"
     }
   ],
   "modules": [
@@ -15,7 +16,8 @@
       "description": "Overview of the home screen: stat cards, doctors and staff on duty, patient queue and tickets.",
       "order": 1,
       "tool": "ekko",
-      "comingSoon": true
+      "comingSoon": false,
+      "poster": "01_dashboard.jpg"
     },
     {
       "id": "inhouse",
@@ -24,7 +26,8 @@
       "description": "Team calendar for meetings and the Team news feed.",
       "order": 2,
       "tool": "ekko",
-      "comingSoon": true
+      "comingSoon": false,
+      "poster": "02_inhouse.jpg"
     },
     {
       "id": "clockin",
@@ -33,7 +36,8 @@
       "description": "How to start and end a shift and how it shows in Staff on duty.",
       "order": 3,
       "tool": "ekko",
-      "comingSoon": true
+      "comingSoon": false,
+      "poster": "03_clockin.jpg"
     },
     {
       "id": "outpatients",
@@ -42,7 +46,8 @@
       "description": "Registering outpatients, managing the queue, files and visit analysis.",
       "order": 4,
       "tool": "ekko",
-      "comingSoon": true
+      "comingSoon": false,
+      "poster": "04_outpatients.jpg"
     },
     {
       "id": "finance",
@@ -51,7 +56,8 @@
       "description": "Income, expenses, cash flow and outstanding balances by department.",
       "order": 5,
       "tool": "ekko",
-      "comingSoon": true
+      "comingSoon": false,
+      "poster": "05_finance.jpg"
     },
     {
       "id": "pharmacy",
@@ -60,7 +66,8 @@
       "description": "Vendors, GRNs and order summary, pharmacy sales and problem reports.",
       "order": 6,
       "tool": "ekko",
-      "comingSoon": true
+      "comingSoon": false,
+      "poster": "06_pharmacy.jpg"
     },
     {
       "id": "beds",
@@ -69,7 +76,8 @@
       "description": "Admitting patients, allocating beds, rooms and discharge files.",
       "order": 7,
       "tool": "ekko",
-      "comingSoon": true
+      "comingSoon": false,
+      "poster": "07_beds.jpg"
     },
     {
       "id": "laboratory",
@@ -78,7 +86,8 @@
       "description": "Recording tests, daily reports, analysis, payments and the test catalogue.",
       "order": 8,
       "tool": "ekko",
-      "comingSoon": true
+      "comingSoon": false,
+      "poster": "08_laboratory.jpg"
     },
     {
       "id": "maintenance",
@@ -87,7 +96,8 @@
       "description": "Raising maintenance tickets and reviewing resolved files.",
       "order": 9,
       "tool": "ekko",
-      "comingSoon": true
+      "comingSoon": false,
+      "poster": "09_maintenance.jpg"
     },
     {
       "id": "ambulance",
@@ -96,7 +106,8 @@
       "description": "Vehicles, drivers, trip assignment and vehicle care costs.",
       "order": 10,
       "tool": "ekko",
-      "comingSoon": true
+      "comingSoon": false,
+      "poster": "10_ambulance.jpg"
     },
     {
       "id": "administration",
@@ -105,7 +116,8 @@
       "description": "Adding staff, setting portal access and managing your account.",
       "order": 11,
       "tool": "ekko",
-      "comingSoon": true
+      "comingSoon": false,
+      "poster": "11_administration.jpg"
     }
   ]
 }
