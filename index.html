@@ -42,8 +42,8 @@
 
 <main>
 <section class="sec" id="hero">
-  <div class="blob" style="width:560px;height:560px;background:#e5f2eb;left:-180px;top:-120px"></div>
-  <div class="blob" style="width:420px;height:420px;background:#eeebfa;right:-80px;top:40px"></div>
+  <div class="blob" style="width:560px;height:560px;background:radial-gradient(closest-side,#e5f2eb,#e5f2eb00);left:-180px;top:-120px"></div>
+  <div class="blob" style="width:420px;height:420px;background:radial-gradient(closest-side,#eeebfa,#eeebfa00);right:-80px;top:40px"></div>
   <div class="wrap hero-grid">
     <div class="hero-copy">
       <div class="rv feat"><span id="ekko-mark"></span><b>Coming soon · Ekko</b><i>Hospital Administration</i></div>
@@ -53,19 +53,15 @@
         <a class="btn p" href="#tools">Explore our tools ↓</a>
         <a class="btn g" href="get-ekko.html">Get early access ↗</a>
       </div>
-      <p class="rv" style="margin-top:28px;font-size:14px;color:var(--mute)"><span class="live"></span>Tap a room. Step inside. · Sample data</p>
+      <p class="rv" style="margin-top:28px;font-size:14px;color:var(--mute)"><span class="live"></span>Tap a room to step inside.</p>
     </div>
     <div class="hero-stage rv" id="hero-stage">
-      <svg id="iso" viewBox="0 0 1120 900" role="img" aria-label="Animated hospital cross-section"></svg>
-      <div class="hero-kpi" id="hmini" aria-live="polite"></div>
-      <div class="zoom-panel card" id="zoomp" hidden>
-        <div style="display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:8px;flex-wrap:wrap">
-          <div><div class="eyebrow" id="zeye">Outpatients · live</div><div style="font:700 24px 'Plus Jakarta Sans';margin-top:4px" id="ztitle">Every token. <em class="s">In order.</em></div></div>
-          <button class="btn g" id="back" type="button" style="padding:10px 18px">← Back</button>
-        </div>
-        <svg id="zsvg" viewBox="40 30 920 560"></svg>
-        <div id="zdata" class="exp-data" style="margin-top:8px"></div>
+      <div class="iso-wrap" id="isow">
+        <svg id="iso-s" class="iso" viewBox="0 0 1120 900" aria-hidden="true"></svg>
+        <svg id="iso-d" class="iso" viewBox="0 0 1120 900" aria-hidden="true"></svg>
+        <svg id="iso" class="iso" viewBox="0 0 1120 900" role="group" aria-label="Hospital map. Choose a room to see its module."></svg>
       </div>
+      <div class="hero-kpi" id="hmini" aria-live="off"></div>
     </div>
   </div>
 </section>
@@ -102,9 +98,9 @@
   <div class="wrap">
     <div class="rv" style="text-align:center"><div class="eyebrow">How it works</div>
     <h2 style="margin-top:14px">Four steps. <em class="s">Then it just runs.</em></h2></div>
-    <div class="how-track">
-      <div class="how-bar"><i id="hbar"></i></div>
-      <div class="how-grid" id="how-grid" role="list"></div>
+    <div class="how-wrap" id="howwrap">
+      <ol class="how-steps" id="how-steps"></ol>
+      <div class="how-stage" id="how-stage"></div>
     </div>
   </div>
 </section>
@@ -120,7 +116,7 @@
         <svg id="csvg" viewBox="40 30 920 560" role="img" aria-label="Live module scene"></svg>
         <div id="cdata" class="exp-data"></div>
       </div>
-      <div class="eu" id="eui" aria-live="polite"></div>
+      <div class="eu" id="eui"></div>
     </div>
   </div>
 </section>
