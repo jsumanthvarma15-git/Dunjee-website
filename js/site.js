@@ -61,12 +61,8 @@ let hov=-1;
 const isoS=$('#iso-s'),isoD=$('#iso-d'),isoU=$('#iso');
 isoS.innerHTML=isoStatic(-1);isoU.innerHTML=isoUI();
 function setHover(i){if(i===hov)return;hov=i;isoS.innerHTML=isoStatic(i);$$('#iso .room-g').forEach(g=>g.classList.toggle('on',+g.dataset.room===i))}
-function goRoom(i){
-  setMod(ROOM_TO_MOD[i]);
-  const target=$('#inside');
-  target.scrollIntoView({behavior:reduce?'auto':'smooth',block:'start'});
-  const tab=$('#sb'+ROOM_TO_MOD[i]);if(tab){tab.classList.add('flash');setTimeout(()=>tab.classList.remove('flash'),1400)}
-}
+// Rooms open in place inside the hero (js/hero-rooms.js). Never scrolls.
+function goRoom(i){if(window.HeroRooms)window.HeroRooms.open(i)}
 isoU.addEventListener('pointerover',e=>{const g=e.target.closest('.room-g');setHover(g?+g.dataset.room:-1)});
 isoU.addEventListener('pointerleave',()=>setHover(-1));
 isoU.addEventListener('click',e=>{const g=e.target.closest('.room-g');if(g)goRoom(+g.dataset.room)});
@@ -159,10 +155,8 @@ Object.keys(sceneOn).forEach(id=>{const el=$('#'+id);if(el)secIO.observe(el)});
 let t0=performance.now(),last=t0,raf=0,frame=0,cost=0;
 function draw(now){
   const t=(now-t0)/1000;
-  if(sceneOn.hero){
+  if(sceneOn.hero&&!(window.HeroRooms&&window.HeroRooms.current>=0)){
     isoD.innerHTML=isoDynamic(t,hov);
-    const cu=v=>Math.round(v*Math.min(1,Math.max(0,(t-.5)/1.2)));
-    setHTML($('#hmini'),`<div class="hk-h"><span>${EKKO(20)} Ekko</span><span class="badge">Today</span></div><div class="kg">${[['Doctors available',cu(4),'mint'],['Beds available',cu(6),'ice'],['OP remaining',Math.max(3,9-Math.floor(t/3)%7),'peach'],['Pending tickets',cu(2),'lav']].map(([l,v,c])=>`<div class="kc" style="background:${COL[c][0]}"><small>${l}</small><b>${v}</b></div>`).join('')}</div>`);
   }
   if(sceneOn.tools)setHTML($('#ekprev'),lightDash(t,true));
   if(sceneOn.how&&how.i>=0){
