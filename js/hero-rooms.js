@@ -137,10 +137,13 @@ const RV=[
 
 const stage=$('#hero-stage'),wrap=$('#isow');
 const view=document.createElement('div');view.className='room-view';view.id='roomview';view.setAttribute('role','dialog');view.setAttribute('aria-modal','false');view.setAttribute('aria-label','Room view');view.hidden=true;
-view.innerHTML=`<div class="rv-top"><div class="rv-tabs" role="tablist" aria-label="Rooms">${RV.map((r,i)=>`<button type="button" class="rv-tab" role="tab" data-i="${i}" style="--c:${r.col}"><i></i>${r.name}</button>`).join('')}</div><button type="button" class="rv-x" aria-label="Back to the map"><svg viewBox="0 0 24 24" width="18" height="18"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg></button></div>
+view.innerHTML=`<div class="rv-grab" aria-hidden="true"></div><div class="rv-top"><div class="rv-tabs" role="tablist" aria-label="Rooms">${RV.map((r,i)=>`<button type="button" class="rv-tab" role="tab" data-i="${i}" style="--c:${r.col}"><i></i>${r.name}</button>`).join('')}</div><button type="button" class="rv-x" aria-label="Back to the map"><svg viewBox="0 0 24 24" width="18" height="18"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg></button></div>
 <div class="rv-scene"><svg class="rv-l on" viewBox="40 30 920 560" preserveAspectRatio="xMidYMid meet" aria-hidden="true"></svg><svg class="rv-l" viewBox="40 30 920 560" preserveAspectRatio="xMidYMid meet" aria-hidden="true"></svg></div>
 <div class="rv-card"><div class="rv-info"></div></div>`;
 stage.appendChild(view);
+const isM=()=>window.matchMedia('(max-width:640px)').matches;
+const bdrop=document.createElement('div');bdrop.className='rv-back';bdrop.setAttribute('aria-hidden','true');document.body.appendChild(bdrop);
+let sheet=false;
 const layers=[...view.querySelectorAll('.rv-l')],info=view.querySelector('.rv-info');
 let cur=-1,open=false,t0=0,front=0,raf=0,closeTimer=0;
 
@@ -162,9 +165,11 @@ function show(i){
   front=nf;
   // card swap
   if(first){info.innerHTML=cardHTML(r)}else{info.classList.add('swap');setTimeout(()=>{info.innerHTML=cardHTML(r);info.classList.remove('swap')},reduce?0:180)}
-  zoomMap(i);
+  if(first){sheet=isM();if(sheet){if(view.parentNode!==document.body)document.body.appendChild(view);view.classList.add('sheet');view.setAttribute('aria-modal','true')}else{if(view.parentNode!==stage)stage.appendChild(view);view.classList.remove('sheet');view.setAttribute('aria-modal','false')}}
+  if(!sheet)zoomMap(i);
   if(first){
-    clearTimeout(closeTimer);open=true;view.hidden=false;
+    clearTimeout(closeTimer);open=true;view.hidden=false;view.style.transform='';
+    if(sheet)requestAnimationFrame(()=>bdrop.classList.add('on'));
     stage.classList.add('zoomed');
     requestAnimationFrame(()=>requestAnimationFrame(()=>view.classList.add('open')));
     view.querySelector('.rv-x').focus({preventScroll:true});
@@ -172,7 +177,7 @@ function show(i){
   }
 }
 function close(){
-  if(!open)return;open=false;view.classList.remove('open');stage.classList.remove('zoomed');wrap.style.transform='';
+  if(!open)return;open=false;view.classList.remove('open');stage.classList.remove('zoomed');wrap.style.transform='';bdrop.classList.remove('on');view.style.transform='';
   cancelAnimationFrame(raf);raf=0;
   const back=cur;closeTimer=setTimeout(()=>{view.hidden=true;layers.forEach(l=>l.innerHTML='');cur=-1;const g=$('#room'+back);if(g)g.focus({preventScroll:true})},reduce?0:650);
 }
@@ -187,8 +192,15 @@ view.addEventListener('click',e=>{
 view.querySelector('.rv-tabs').addEventListener('keydown',e=>{if(e.key==='ArrowRight'||e.key==='ArrowLeft'){e.preventDefault();const n=(cur+(e.key==='ArrowRight'?1:RV.length-1))%RV.length;show(n);view.querySelector(`.rv-tab[data-i="${n}"]`).focus({preventScroll:true})}});
 document.addEventListener('keydown',e=>{if(open&&e.key==='Escape')close()});
 // click outside the room view (anywhere else in the hero) zooms back out
-document.getElementById('hero').addEventListener('click',e=>{if(open&&!e.target.closest('.room-view')&&!e.target.closest('.room-g'))close()});
-window.addEventListener('resize',()=>{if(open)zoomMap(cur)});
+document.getElementById('hero').addEventListener('click',e=>{if(open&&!e.target.closest('.room-view')&&!e.target.closest('.room-g')&&!e.target.closest('.room-chips'))close()});
+window.addEventListener('resize',()=>{if(open&&!sheet)zoomMap(cur)});
+bdrop.addEventListener('click',()=>close());
+// drag the sheet's handle down to dismiss
+{const g=view.querySelector('.rv-grab');let y0=null,dy=0;
+ g.addEventListener('pointerdown',e=>{if(!sheet)return;y0=e.clientY;dy=0;view.style.transition='none';g.setPointerCapture(e.pointerId)});
+ g.addEventListener('pointermove',e=>{if(y0===null)return;dy=Math.max(0,e.clientY-y0);view.style.transform=`translate3d(0,${dy}px,0)`});
+ const up=()=>{if(y0===null)return;y0=null;view.style.transition='';if(dy>90)close();else view.style.transform=''};
+ g.addEventListener('pointerup',up);g.addEventListener('pointercancel',up)}
 
 window.HeroRooms={open:show,close,scene:(i,t)=>RV[i].scene(t),get current(){return open?cur:-1}};
 })();
