@@ -152,7 +152,7 @@ Object.keys(sceneOn).forEach(id=>{const el=$('#'+id);if(el)secIO.observe(el)});
 
 // Adaptive frame budget: if SVG scenes are slow on this device, draw them every other frame
 // so motion stays steady instead of stuttering.
-let t0=performance.now(),last=t0,raf=0,frame=0,cost=0;
+let t0=performance.now(),last=t0,raf=0,frame=0,cost=0;const isPhone=matchMedia('(max-width:640px)');
 function draw(now){
   const t=(now-t0)/1000;
   if(sceneOn.hero&&!(window.HeroRooms&&window.HeroRooms.current>=0)){
@@ -185,7 +185,8 @@ function tick(now){
     const pg=$('#hpg'+how.i);if(pg)pg.style.transform=`scaleX(${Math.min(1,how.elapsed/STEP_MS).toFixed(4)})`;
   }
   frame++;
-  const skip=cost>14&&(frame&1);
+  // phones: scenes redraw at ~30fps (smooth, light on battery); desktop adapts to cost
+  const skip=(cost>14||isPhone.matches)&&(frame&1);
   if(!skip){const a=performance.now();draw(now);const c=performance.now()-a;cost=cost*.9+c*.1}
   raf=requestAnimationFrame(tick);
 }
