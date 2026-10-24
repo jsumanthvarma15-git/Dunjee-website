@@ -237,8 +237,8 @@ footer .wrap{width:min(1760px,100%)}
 /* ===== smoothness + interaction pass ===== */
 .iso-wrap{position:relative;width:100%;height:clamp(420px,72svh,900px)}
 .iso-wrap .iso{position:absolute;inset:0;width:100%!important;height:100%!important;min-height:0!important;overflow:visible}
-#iso-s,#iso-d{pointer-events:none}
-#iso-d{will-change:transform}
+#iso-s,#iso-d,#iso-s2,#iso-d2{pointer-events:none}
+#iso-d,#iso-d2{will-change:transform}
 .room-g{cursor:pointer;outline:none}
 .room-hit{cursor:pointer}
 .room-l{transition:transform .35s cubic-bezier(.2,.7,.2,1)}

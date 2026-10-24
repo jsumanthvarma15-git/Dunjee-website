@@ -58,9 +58,9 @@ setMod(1);
 
 // ---------- Hero map ----------
 let hov=-1;
-const isoS=$('#iso-s'),isoD=$('#iso-d'),isoU=$('#iso');
-isoS.innerHTML=isoStatic(-1);isoU.innerHTML=isoUI();
-function setHover(i){if(i===hov)return;hov=i;isoS.innerHTML=isoStatic(i);$$('#iso .room-g').forEach(g=>g.classList.toggle('on',+g.dataset.room===i))}
+const isoS=$('#iso-s'),isoD=$('#iso-d'),isoS2=$('#iso-s2'),isoD2=$('#iso-d2'),isoU=$('#iso');
+isoS.innerHTML=isoStatic(-1);isoS2.innerHTML=isoStaticFront(-1);isoU.innerHTML=isoUI();
+function setHover(i){if(i===hov)return;hov=i;isoS.innerHTML=isoStatic(i);isoS2.innerHTML=isoStaticFront(i);$$('#iso .room-g').forEach(g=>g.classList.toggle('on',+g.dataset.room===i))}
 // Rooms open in place inside the hero (js/hero-rooms.js). Never scrolls.
 function goRoom(i){if(window.HeroRooms)window.HeroRooms.open(i)}
 isoU.addEventListener('pointerover',e=>{const g=e.target.closest('.room-g');setHover(g?+g.dataset.room:-1)});
@@ -156,7 +156,7 @@ let t0=performance.now(),last=t0,raf=0,frame=0,cost=0;const isPhone=matchMedia('
 function draw(now){
   const t=(now-t0)/1000;
   if(sceneOn.hero&&!(window.HeroRooms&&window.HeroRooms.current>=0)){
-    isoD.innerHTML=isoDynamic(t,hov);
+    const pp=isoPeople(t,hov);isoD.innerHTML=pp[0];isoD2.innerHTML=pp[1];
   }
   if(sceneOn.tools)setHTML($('#ekprev'),lightDash(t,true));
   if(sceneOn.how&&how.i>=0){

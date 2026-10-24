@@ -22,9 +22,9 @@ function rOutpatients(t){const P=11,lt=t%P;const tok='A-105';const called=lt>7.6
  s+=hp({x:146,y:450,pose:'sit',ph:t,f:1,outfit:'casual',top:'#f2bf9c',bottom:'#5c6f8f',hair:'#c7ccd2',hs:'short',skin:SK[3]});
  s+=hp({x:238,y:450,pose:'sit',ph:t+1,f:1,top:'#9fd6bd',hs:'long',hair:'#1f2a3d',skin:SK[2],bottom:'#33496e'});
  const pt={shirt:'#7fb8e4',hair:'#2b2b33',skin:SK[0],bottom:'#33496e'};
- if(lt<4.6){const W=walkAt(lt,[[0,-40,456,1],[2,420,456],[3.2,420,456,1],[4.6,330,450]]);s+=hp(Object.assign({x:W.x,y:W.y,pose:W.moving?'walk':'work',ph:W.ph,f:W.f},pt))}
+ if(lt<4.6){const W=walkAt(lt,[[0,-40,512,1],[2.1,420,458],[3.2,420,458,1],[4.6,330,450]]);/* enters on the open floor in front of the waiting chairs */s+=hp(Object.assign({x:W.x,y:W.y,pose:W.moving?'walk':'work',ph:W.ph,f:W.f},pt))}
  else if(lt<7.9)s+=hp(Object.assign({x:330,y:450,pose:'sit',ph:t,f:1},pt));
- else{const W=walkAt(lt,[[7.9,334,456,1],[10.2,862,456],[11,862,456,1]]);s+=hp(Object.assign({x:W.x,y:W.y,pose:W.moving?'walk':'stand',ph:W.ph,f:W.f,alpha:lt>10.2?1-C01((lt-10.2)*2.5):1},pt))}
+ else{const W=walkAt(lt,[[7.9,334,456,1],[8.5,390,500],[10,800,500],[10.5,862,450],[11,862,450,1]]);s+=hp(Object.assign({x:W.x,y:W.y,pose:W.moving?'walk':'stand',ph:W.ph,f:W.f,alpha:lt>10.3?1-C01((lt-10.3)*2.5):1},pt))}
  s+=hRoomEnd();
  if(lt>2.3&&lt<5){const a=lt<4.6?1:1-C01((lt-4.6)/.4);const k=pop(lt-2.3);s+=`<g transform="translate(468,236) scale(${k.toFixed(3)})" opacity="${a.toFixed(3)}"><rect x="-74" y="-24" width="148" height="48" rx="14" fill="#13294b"/><text y="7" text-anchor="middle" font-family="Plus Jakarta Sans" font-weight="800" font-size="20" fill="#fff">Token ${tok}</text></g>`}
  if(lt>9.4)s+=pill(862,150,196,'✓ Consult started','#227568','#fff',C01((lt-9.4)*3));
@@ -57,12 +57,12 @@ function rPharmacy(t){const P=10,lt=t%P;
  s+=hSign(800,92,'PHARMACY','#2f8a63')+hClock(900,108,t);
  const took=lt>3.2&&lt<9.6;
  s+=hCupboard(80,440,150,300,1,0)+hCupboard(240,440,150,300,took?.55:1,3)+hCupboard(400,440,150,300,1,5);
- s+=hPlant(600,440,.9);
+ s+=hPlant(872,440,.9);/* kept clear of the pharmacist's path between counter and cupboards */
  // pharmacist: counter -> cupboard -> counter
- const W=walkAt(lt,[[0,700,452,-1],[1.6,320,452],[3.4,320,452,-1],[5,700,452],[10,700,452,1]]);
+ const W=walkAt(lt,[[0,700,446,-1],[1.6,320,446],[3.4,320,446,-1],[5,700,446],[10,700,446,1]]);
  const atShelf=lt>1.6&&lt<3.4;
- const behind=W.x>580;
- const ph=hp({x:W.x,y:452,pose:W.moving?(lt>3.4?'carry':'walk'):atShelf?'reach':'work',ph:W.ph,f:W.f,coat:'#f3f7fc',shirt:'#b7aaf0',hs:'bun',hair:'#3a2c2a',skin:SK[1],item:lt>3.4&&lt<5.2?'box':null});
+ const behind=true;/* she walks the lane behind the counter, so it always covers her */
+ const ph=hp({x:W.x,y:446,pose:W.moving?(lt>3.4?'carry':'walk'):atShelf?'reach':'work',ph:W.ph,f:W.f,coat:'#f3f7fc',shirt:'#b7aaf0',hs:'bun',hair:'#3a2c2a',skin:SK[1],item:lt>3.4&&lt<5.2?'box':null});
  if(behind)s+=ph;
  s+=hPharmCounter(620,452,230);
  if(!behind)s+=ph;
